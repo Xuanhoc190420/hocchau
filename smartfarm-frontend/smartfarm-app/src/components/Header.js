@@ -1,12 +1,36 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from "react-native"
-import { COLORS } from "../styles/theme"
+import { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+} from "react-native";
+import { COLORS } from "../styles/theme";
+import {
+  ChickenIcon,
+  SearchIcon,
+  PhoneIcon,
+  UserIcon,
+  CartIcon,
+  SettingsIcon,
+  LogoutIcon,
+  PackageIcon,
+} from "./common/icons/headerIcons";
 
-export default function Header({ currentTab, onTabChange, currentUser, onLogout, onLogin, cartCount = 0 }) {
-  const [showUserMenu, setShowUserMenu] = useState(false)
-  const [searchText, setSearchText] = useState("")
+export default function Header({
+  currentTab,
+  onTabChange,
+  currentUser,
+  onLogout,
+  onLogin,
+  cartCount = 0,
+}) {
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   const navItems = [
     { id: "Home", label: "Trang chủ" },
@@ -14,46 +38,60 @@ export default function Header({ currentTab, onTabChange, currentUser, onLogout,
     { id: "StoreChain", label: "Chuỗi cửa hàng" },
     { id: "Coops", label: "Trang trại" },
     { id: "Farm", label: "Quản lí trang trại" },
-  ]
+  ];
 
   const handleSearch = (text) => {
-    setSearchText(text)
-  }
+    setSearchText(text);
+  };
 
   const handleNavClick = (id) => {
-    onTabChange(id)
-  }
+    onTabChange(id);
+  };
 
   const handleLogoutClick = () => {
-    setShowUserMenu(false)
-    onLogout()
-  }
+    setShowUserMenu(false);
+    onLogout();
+  };
 
   const handleLoginClick = () => {
-    onLogin()
-  }
+    onLogin();
+  };
 
   return (
     <View style={styles.header}>
       <View style={styles.brandSection}>
-        <Text style={styles.brandIcon}>🐔</Text>
+        <ChickenIcon size={28} color={COLORS.primary} />
         <Text style={styles.brandName}>Gà Đồi Hoàng Long</Text>
       </View>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.navSection}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.navSection}
+      >
         {navItems.map((item) => (
           <TouchableOpacity
             key={item.id}
-            style={[styles.navItem, currentTab === item.id && styles.navItemActive]}
+            style={[
+              styles.navItem,
+              currentTab === item.id && styles.navItemActive,
+            ]}
             onPress={() => handleNavClick(item.id)}
           >
-            <Text style={[styles.navLabel, currentTab === item.id && styles.navLabelActive]}>{item.label}</Text>
+            <Text
+              style={[
+                styles.navLabel,
+                currentTab === item.id && styles.navLabelActive,
+              ]}
+            >
+              {item.label}
+            </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
       <View style={styles.searchContainer}>
-        <Text style={styles.searchIcon}>🔍</Text>
+        <SearchIcon size={16} color="#999" />
         <TextInput
           style={styles.searchInput}
           placeholder="Tìm kiếm..."
@@ -64,28 +102,39 @@ export default function Header({ currentTab, onTabChange, currentUser, onLogout,
       </View>
 
       <View style={styles.rightSection}>
-        <TouchableOpacity style={styles.contactBtn} onPress={() => handleNavClick("Contact")}>
-          <Text style={styles.contactIcon}>📞</Text>
+        <TouchableOpacity
+          style={styles.contactBtn}
+          onPress={() => handleNavClick("Contact")}
+        >
+          <PhoneIcon size={16} color="#666" />
           <Text style={styles.contactText}>Liên hệ</Text>
         </TouchableOpacity>
 
         {currentUser ? (
-          <TouchableOpacity style={styles.userBtn} onPress={() => setShowUserMenu(!showUserMenu)}>
-            <Text style={styles.userIcon}>👤</Text>
+          <TouchableOpacity
+            style={styles.userBtn}
+            onPress={() => setShowUserMenu(!showUserMenu)}
+          >
+            <UserIcon size={16} color="#666" />
             <View style={styles.userInfo}>
               <Text style={styles.userName}>{currentUser.fullName}</Text>
-              {currentUser.role === "admin" && <Text style={styles.userBadge}>Admin</Text>}
+              {currentUser.role === "admin" && (
+                <Text style={styles.userBadge}>Admin</Text>
+              )}
             </View>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.loginBtn} onPress={handleLoginClick}>
-            <Text style={styles.loginIcon}>👤</Text>
+            <UserIcon size={14} color="#fff" />
             <Text style={styles.loginText}>Đăng nhập</Text>
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity style={styles.cartBtn} onPress={() => onTabChange("Cart")}>
-          <Text style={styles.cartIcon}>🛒</Text>
+        <TouchableOpacity
+          style={styles.cartBtn}
+          onPress={() => onTabChange("Cart")}
+        >
+          <CartIcon size={20} color="#666" />
           {cartCount > 0 && (
             <View style={styles.cartBadge}>
               <Text style={styles.cartBadgeText}>{cartCount}</Text>
@@ -100,34 +149,37 @@ export default function Header({ currentTab, onTabChange, currentUser, onLogout,
               <Text style={styles.menuHeaderEmail}>{currentUser.email}</Text>
             </View>
             <TouchableOpacity style={styles.menuItem}>
-              <Text style={styles.menuIcon}>👤</Text>
+              <UserIcon size={14} color="#666" />
               <Text style={styles.menuText}>Tài khoản của tôi</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.menuItem}>
-              <Text style={styles.menuIcon}>📦</Text>
+              <PackageIcon size={14} color="#666" />
               <Text style={styles.menuText}>Đơn hàng</Text>
             </TouchableOpacity>
             {currentUser.role === "admin" && (
               <TouchableOpacity
                 style={styles.menuItem}
                 onPress={() => {
-                  setShowUserMenu(false)
-                  handleNavClick("Farm")
+                  setShowUserMenu(false);
+                  handleNavClick("Farm");
                 }}
               >
-                <Text style={styles.menuIcon}>⚙️</Text>
+                <SettingsIcon size={14} color="#666" />
                 <Text style={styles.menuText}>Quản lý</Text>
               </TouchableOpacity>
             )}
-            <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={handleLogoutClick}>
-              <Text style={styles.menuIcon}>🚪</Text>
+            <TouchableOpacity
+              style={[styles.menuItem, styles.menuItemLast]}
+              onPress={handleLogoutClick}
+            >
+              <LogoutIcon size={14} color="#666" />
               <Text style={styles.menuText}>Đăng xuất</Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -151,9 +203,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
     minWidth: 180,
-  },
-  brandIcon: {
-    fontSize: 28,
   },
   brandName: {
     fontSize: 16,
@@ -195,9 +244,6 @@ const styles = StyleSheet.create({
     minWidth: 200,
     gap: 8,
   },
-  searchIcon: {
-    fontSize: 16,
-  },
   searchInput: {
     flex: 1,
     fontSize: 13,
@@ -219,9 +265,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     gap: 6,
   },
-  contactIcon: {
-    fontSize: 16,
-  },
   contactText: {
     fontSize: 13,
     fontWeight: "600",
@@ -241,9 +284,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-  loginIcon: {
-    fontSize: 14,
-  },
   loginText: {
     fontSize: 13,
     fontWeight: "700",
@@ -259,9 +299,6 @@ const styles = StyleSheet.create({
     gap: 8,
     borderWidth: 1,
     borderColor: "#e0e0e0",
-  },
-  userIcon: {
-    fontSize: 16,
   },
   userInfo: {
     flexDirection: "row",
@@ -286,9 +323,6 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingHorizontal: 12,
     paddingVertical: 8,
-  },
-  cartIcon: {
-    fontSize: 20,
   },
   cartBadge: {
     position: "absolute",
@@ -349,9 +383,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#f0f0f0",
     gap: 10,
   },
-  menuIcon: {
-    fontSize: 14,
-  },
   menuItemLast: {
     borderBottomWidth: 0,
   },
@@ -360,4 +391,4 @@ const styles = StyleSheet.create({
     color: "#333",
     fontWeight: "500",
   },
-})
+});

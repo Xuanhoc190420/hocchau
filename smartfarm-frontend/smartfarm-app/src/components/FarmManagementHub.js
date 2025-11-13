@@ -1,9 +1,30 @@
-"use client"
+"use client";
 
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, SafeAreaView } from "react-native"
-import { COLORS } from "../styles/theme"
-import { getCoops, getFeeds, getChickenTxs } from "../api/api"
-import { useState, useEffect } from "react"
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
+import { COLORS } from "../styles/theme";
+import { getCoops, getFeeds, getChickenTxs } from "../api/api";
+import { useState, useEffect } from "react";
+import {
+  CoopIcon,
+  FeedIcon,
+  ImportIcon,
+  ExportIcon,
+  CartIcon,
+  PackageIcon,
+  StoreIcon,
+  ChickenIcon,
+  CountIcon,
+  ChartIcon,
+  MoneyIcon,
+  CashIcon,
+} from "./common/icons/farmIcons";
 
 export default function FarmManagementHub({ onSelectFeature }) {
   const [stats, setStats] = useState({
@@ -13,40 +34,50 @@ export default function FarmManagementHub({ onSelectFeature }) {
     totalTransactions: 0,
     totalCosts: 0,
     totalRevenue: 0,
-  })
-  const [coops, setCoops] = useState([])
-  const [loading, setLoading] = useState(true)
+  });
+  const [coops, setCoops] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadStats()
-  }, [])
+    loadStats();
+  }, []);
 
   const calculateChickenAge = (createdAt) => {
-    if (!createdAt) return 0
-    const createdDate = new Date(createdAt)
-    const today = new Date()
-    const diffTime = Math.abs(today - createdDate)
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
-    const weeks = Math.floor(diffDays / 7) + 1
-    return weeks
-  }
+    if (!createdAt) return 0;
+    const createdDate = new Date(createdAt);
+    const today = new Date();
+    const diffTime = Math.abs(today - createdDate);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const weeks = Math.floor(diffDays / 7) + 1;
+    return weeks;
+  };
 
   const loadStats = async () => {
     try {
-      console.log("[v0] Loading farm stats...")
-      const [coopsData, feedsData, txData] = await Promise.all([getCoops(), getFeeds(), getChickenTxs()])
+      console.log("[v0] Loading farm stats...");
+      const [coopsData, feedsData, txData] = await Promise.all([
+        getCoops(),
+        getFeeds(),
+        getChickenTxs(),
+      ]);
 
-      console.log("[v0] Coops data:", coopsData)
-      console.log("[v0] Feeds data:", feedsData)
-      console.log("[v0] Transactions data:", txData)
+      console.log("[v0] Coops data:", coopsData);
+      console.log("[v0] Feeds data:", feedsData);
+      console.log("[v0] Transactions data:", txData);
 
-      const totalChickens = (coopsData || []).reduce((sum, coop) => sum + (coop.chickens || 0), 0)
+      const totalChickens = (coopsData || []).reduce(
+        (sum, coop) => sum + (coop.chickens || 0),
+        0
+      );
       const totalCosts = (coopsData || []).reduce((sum, coop) => {
-        const chickenCost = coop.totalChickenCost || 0
-        const feedCost = coop.totalFeedCost || 0
-        return sum + chickenCost + feedCost
-      }, 0)
-      const totalRevenue = (coopsData || []).reduce((sum, coop) => sum + (coop.totalRevenue || 0), 0)
+        const chickenCost = coop.totalChickenCost || 0;
+        const feedCost = coop.totalFeedCost || 0;
+        return sum + chickenCost + feedCost;
+      }, 0);
+      const totalRevenue = (coopsData || []).reduce(
+        (sum, coop) => sum + (coop.totalRevenue || 0),
+        0
+      );
 
       setStats({
         totalCoops: (coopsData || []).length,
@@ -55,105 +86,108 @@ export default function FarmManagementHub({ onSelectFeature }) {
         totalTransactions: (txData || []).length,
         totalCosts: totalCosts,
         totalRevenue: totalRevenue,
-      })
-      setCoops(coopsData || [])
-      setLoading(false)
+      });
+      setCoops(coopsData || []);
+      setLoading(false);
     } catch (error) {
-      console.log("[v0] Error loading stats:", error.message)
-      setLoading(false)
+      console.log("[v0] Error loading stats:", error.message);
+      setLoading(false);
     }
-  }
+  };
 
   const features = [
     {
       id: 1,
       title: "Tạo Chuồng",
-      icon: "🏠",
+      icon: <CoopIcon size={32} color="#1976d2" />,
       description: "Tạo chuồng gà mới",
       color: "#e3f2fd",
       borderColor: "#1976d2",
       onPress: () => {
-        console.log("[v0] Selected: createCoop")
-        onSelectFeature("createCoop")
+        console.log("[v0] Selected: createCoop");
+        onSelectFeature("createCoop");
       },
     },
     {
       id: 2,
       title: "Tạo Thức Ăn",
-      icon: "🌾",
+      icon: <FeedIcon size={32} color="#7b1fa2" />,
       description: "Tạo loại thức ăn mới",
       color: "#f3e5f5",
       borderColor: "#7b1fa2",
       onPress: () => {
-        console.log("[v0] Selected: createFeed")
-        onSelectFeature("createFeed")
+        console.log("[v0] Selected: createFeed");
+        onSelectFeature("createFeed");
       },
     },
     {
       id: 3,
       title: "Nhập Gà",
-      icon: "⬇️",
+      icon: <ImportIcon size={32} color="#388e3c" />,
       description: "Nhập gà vào chuồng",
       color: "#e8f5e9",
       borderColor: "#388e3c",
       onPress: () => {
-        console.log("[v0] Selected: importChicken")
-        onSelectFeature("importChicken")
+        console.log("[v0] Selected: importChicken");
+        onSelectFeature("importChicken");
       },
     },
     {
       id: 4,
       title: "Xuất Gà",
-      icon: "⬆️",
+      icon: <ExportIcon size={32} color="#f57c00" />,
       description: "Xuất gà khỏi chuồng",
       color: "#fff3e0",
       borderColor: "#f57c00",
       onPress: () => {
-        console.log("[v0] Selected: exportChicken")
-        onSelectFeature("exportChicken")
+        console.log("[v0] Selected: exportChicken");
+        onSelectFeature("exportChicken");
       },
     },
     {
       id: 5,
       title: "Quản Lý Sản Phẩm",
-      icon: "🛒",
+      icon: <CartIcon size={32} color="#c2185b" />,
       description: "Tạo, sửa, xóa sản phẩm",
       color: "#fce4ec",
       borderColor: "#c2185b",
       onPress: () => {
-        console.log("[v0] Selected: manageProducts")
-        onSelectFeature("manageProducts")
+        console.log("[v0] Selected: manageProducts");
+        onSelectFeature("manageProducts");
       },
     },
     {
       id: 6,
       title: "Quản Lý Đơn Hàng",
-      icon: "📦",
+      icon: <PackageIcon size={32} color="#0288d1" />,
       description: "Xem và cập nhật đơn hàng",
       color: "#e1f5fe",
       borderColor: "#0288d1",
       onPress: () => {
-        console.log("[v0] Selected: manageOrders")
-        onSelectFeature("manageOrders")
+        console.log("[v0] Selected: manageOrders");
+        onSelectFeature("manageOrders");
       },
     },
     {
       id: 7,
       title: "Quản Lý Cửa Hàng",
-      icon: "🏪",
+      icon: <StoreIcon size={32} color="#f57f17" />,
       description: "Quản lý cửa hàng phở gà",
       color: "#fff9c4",
       borderColor: "#f57f17",
       onPress: () => {
-        console.log("[v0] Selected: manageStores")
-        onSelectFeature("manageStores")
+        console.log("[v0] Selected: manageStores");
+        onSelectFeature("manageStores");
       },
     },
-  ]
+  ];
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContent}
+      >
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Quản Lí Trang Trại</Text>
           <Text style={styles.headerSubtitle}>Chọn chức năng để tiếp tục</Text>
@@ -163,15 +197,28 @@ export default function FarmManagementHub({ onSelectFeature }) {
           {features.map((feature) => (
             <TouchableOpacity
               key={feature.id}
-              style={[styles.featureCard, { backgroundColor: feature.color, borderColor: feature.borderColor }]}
+              style={[
+                styles.featureCard,
+                {
+                  backgroundColor: feature.color,
+                  borderColor: feature.borderColor,
+                },
+              ]}
               onPress={feature.onPress}
               activeOpacity={0.7}
             >
-              <View style={[styles.featureIcon, { borderColor: feature.borderColor }]}>
-                <Text style={styles.icon}>{feature.icon}</Text>
+              <View
+                style={[
+                  styles.featureIcon,
+                  { borderColor: feature.borderColor },
+                ]}
+              >
+                {feature.icon}
               </View>
               <Text style={styles.featureTitle}>{feature.title}</Text>
-              <Text style={styles.featureDescription}>{feature.description}</Text>
+              <Text style={styles.featureDescription}>
+                {feature.description}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -180,40 +227,58 @@ export default function FarmManagementHub({ onSelectFeature }) {
           <Text style={styles.statsTitle}>Thống Kê Nhanh</Text>
           <View style={styles.statsGrid}>
             <View style={styles.statCard}>
-              <Text style={styles.statIcon}>🐔</Text>
+              <View style={styles.statIconWrapper}>
+                <ChickenIcon size={28} color={COLORS.primary} />
+              </View>
               <Text style={styles.statLabel}>Chuồng Gà</Text>
               <Text style={styles.statValue}>{stats.totalCoops}</Text>
             </View>
             <View style={styles.statCard}>
-              <Text style={styles.statIcon}>🌾</Text>
+              <View style={styles.statIconWrapper}>
+                <FeedIcon size={28} color={COLORS.primary} />
+              </View>
               <Text style={styles.statLabel}>Loại Thức Ăn</Text>
               <Text style={styles.statValue}>{stats.totalFeeds}</Text>
             </View>
             <View style={styles.statCard}>
-              <Text style={styles.statIcon}>🔢</Text>
+              <View style={styles.statIconWrapper}>
+                <CountIcon size={28} color={COLORS.primary} />
+              </View>
               <Text style={styles.statLabel}>Tổng Gà</Text>
               <Text style={styles.statValue}>{stats.totalChickens}</Text>
             </View>
             <View style={styles.statCard}>
-              <Text style={styles.statIcon}>📊</Text>
+              <View style={styles.statIconWrapper}>
+                <ChartIcon size={28} color={COLORS.primary} />
+              </View>
               <Text style={styles.statLabel}>Giao Dịch</Text>
               <Text style={styles.statValue}>{stats.totalTransactions}</Text>
             </View>
           </View>
 
           <View style={styles.totalCostCard}>
-            <Text style={styles.totalCostIcon}>💰</Text>
+            <View style={styles.totalIconWrapper}>
+              <MoneyIcon size={36} color={COLORS.primary} />
+            </View>
             <View style={styles.totalCostContent}>
               <Text style={styles.totalCostLabel}>Tổng Chi Phí Trang Trại</Text>
-              <Text style={styles.totalCostValue}>{stats.totalCosts.toLocaleString("vi-VN")} đ</Text>
+              <Text style={styles.totalCostValue}>
+                {stats.totalCosts.toLocaleString("vi-VN")} đ
+              </Text>
             </View>
           </View>
 
           <View style={styles.totalRevenueCard}>
-            <Text style={styles.totalRevenueIcon}>💵</Text>
+            <View style={styles.totalIconWrapper}>
+              <CashIcon size={36} color="#2e7d32" />
+            </View>
             <View style={styles.totalRevenueContent}>
-              <Text style={styles.totalRevenueLabel}>Tổng Doanh Thu Bán Gà</Text>
-              <Text style={styles.totalRevenueValue}>{stats.totalRevenue.toLocaleString("vi-VN")} đ</Text>
+              <Text style={styles.totalRevenueLabel}>
+                Tổng Doanh Thu Bán Gà
+              </Text>
+              <Text style={styles.totalRevenueValue}>
+                {stats.totalRevenue.toLocaleString("vi-VN")} đ
+              </Text>
             </View>
           </View>
 
@@ -221,31 +286,35 @@ export default function FarmManagementHub({ onSelectFeature }) {
             <View style={styles.coopListSection}>
               <Text style={styles.coopListTitle}>Chi Tiết Từng Chuồng</Text>
               {coops.map((coop) => {
-                const chickenCost = coop.totalChickenCost || 0
-                const feedCost = coop.totalFeedCost || 0
-                const totalCoopCost = chickenCost + feedCost
-                const revenue = coop.totalRevenue || 0
-                const chickens = coop.chickens || 0
-                const status = chickens > 0 ? "Hoạt động" : "Đang trống"
-                const chickenAgeWeeks = calculateChickenAge(coop.createdAt)
+                const chickenCost = coop.totalChickenCost || 0;
+                const feedCost = coop.totalFeedCost || 0;
+                const totalCoopCost = chickenCost + feedCost;
+                const revenue = coop.totalRevenue || 0;
+                const chickens = coop.chickens || 0;
+                const status = chickens > 0 ? "Hoạt động" : "Đang trống";
+                const chickenAgeWeeks = calculateChickenAge(coop.createdAt);
 
                 return (
                   <View key={coop._id} style={styles.coopDetailCard}>
                     <View style={styles.coopDetailHeader}>
                       <View style={styles.coopDetailNameRow}>
-                        <Text style={styles.coopDetailIcon}>🏠</Text>
+                        <CoopIcon size={24} color={COLORS.primary} />
                         <Text style={styles.coopDetailName}>{coop.name}</Text>
                       </View>
                       <View
                         style={[
                           styles.coopStatusBadge,
-                          chickens > 0 ? styles.coopStatusActive : styles.coopStatusEmpty,
+                          chickens > 0
+                            ? styles.coopStatusActive
+                            : styles.coopStatusEmpty,
                         ]}
                       >
                         <Text
                           style={[
                             styles.coopStatusText,
-                            chickens > 0 ? styles.coopStatusTextActive : styles.coopStatusTextEmpty,
+                            chickens > 0
+                              ? styles.coopStatusTextActive
+                              : styles.coopStatusTextEmpty,
                           ]}
                         >
                           {status}
@@ -256,43 +325,74 @@ export default function FarmManagementHub({ onSelectFeature }) {
                     <View style={styles.coopDetailBody}>
                       <View style={styles.coopDetailRow}>
                         <Text style={styles.coopDetailLabel}>Số gà:</Text>
-                        <Text style={styles.coopDetailValue}>{chickens} con</Text>
+                        <Text style={styles.coopDetailValue}>
+                          {chickens} con
+                        </Text>
                       </View>
 
                       {chickens > 0 && (
                         <View style={styles.coopDetailRow}>
-                          <Text style={styles.coopDetailLabel}>Tuần tuổi gà:</Text>
-                          <Text style={[styles.coopDetailValue, styles.chickenAgeValue]}>
+                          <Text style={styles.coopDetailLabel}>
+                            Tuần tuổi gà:
+                          </Text>
+                          <Text
+                            style={[
+                              styles.coopDetailValue,
+                              styles.chickenAgeValue,
+                            ]}
+                          >
                             Đang tuần {chickenAgeWeeks}
                           </Text>
                         </View>
                       )}
 
                       <View style={styles.coopDetailRow}>
-                        <Text style={styles.coopDetailLabel}>Tiền đã dùng:</Text>
-                        <Text style={[styles.coopDetailValue, styles.coopDetailCost]}>
+                        <Text style={styles.coopDetailLabel}>
+                          Tiền đã dùng:
+                        </Text>
+                        <Text
+                          style={[
+                            styles.coopDetailValue,
+                            styles.coopDetailCost,
+                          ]}
+                        >
                           {totalCoopCost.toLocaleString("vi-VN")} đ
                         </Text>
                       </View>
 
                       {chickenCost > 0 && (
                         <View style={styles.coopDetailSubRow}>
-                          <Text style={styles.coopDetailSubLabel}>• Chi phí giống:</Text>
-                          <Text style={styles.coopDetailSubValue}>{chickenCost.toLocaleString("vi-VN")} đ</Text>
+                          <Text style={styles.coopDetailSubLabel}>
+                            • Chi phí giống:
+                          </Text>
+                          <Text style={styles.coopDetailSubValue}>
+                            {chickenCost.toLocaleString("vi-VN")} đ
+                          </Text>
                         </View>
                       )}
 
                       {feedCost > 0 && (
                         <View style={styles.coopDetailSubRow}>
-                          <Text style={styles.coopDetailSubLabel}>• Chi phí thức ăn:</Text>
-                          <Text style={styles.coopDetailSubValue}>{feedCost.toLocaleString("vi-VN")} đ</Text>
+                          <Text style={styles.coopDetailSubLabel}>
+                            • Chi phí thức ăn:
+                          </Text>
+                          <Text style={styles.coopDetailSubValue}>
+                            {feedCost.toLocaleString("vi-VN")} đ
+                          </Text>
                         </View>
                       )}
 
                       {revenue > 0 && (
                         <View style={styles.coopDetailRow}>
-                          <Text style={styles.coopDetailLabel}>Tiền bán gà:</Text>
-                          <Text style={[styles.coopDetailValue, styles.coopDetailRevenue]}>
+                          <Text style={styles.coopDetailLabel}>
+                            Tiền bán gà:
+                          </Text>
+                          <Text
+                            style={[
+                              styles.coopDetailValue,
+                              styles.coopDetailRevenue,
+                            ]}
+                          >
                             {revenue.toLocaleString("vi-VN")} đ
                           </Text>
                         </View>
@@ -301,18 +401,19 @@ export default function FarmManagementHub({ onSelectFeature }) {
 
                     {coop.createdAt && (
                       <Text style={styles.coopDetailDate}>
-                        Tạo ngày: {new Date(coop.createdAt).toLocaleDateString("vi-VN")}
+                        Tạo ngày:{" "}
+                        {new Date(coop.createdAt).toLocaleDateString("vi-VN")}
                       </Text>
                     )}
                   </View>
-                )
+                );
               })}
             </View>
           )}
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -375,9 +476,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderWidth: 2,
   },
-  icon: {
-    fontSize: 32,
-  },
   featureTitle: {
     fontSize: 16,
     fontWeight: "700",
@@ -419,8 +517,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
   },
-  statIcon: {
-    fontSize: 28,
+  statIconWrapper: {
     marginBottom: 4,
   },
   statLabel: {
@@ -449,8 +546,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: COLORS.primary,
   },
-  totalCostIcon: {
-    fontSize: 36,
+  totalIconWrapper: {
     marginRight: 12,
   },
   totalCostContent: {
@@ -481,10 +577,6 @@ const styles = StyleSheet.create({
     elevation: 3,
     borderLeftWidth: 4,
     borderLeftColor: "#2e7d32",
-  },
-  totalRevenueIcon: {
-    fontSize: 36,
-    marginRight: 12,
   },
   totalRevenueContent: {
     flex: 1,
@@ -535,9 +627,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-  },
-  coopDetailIcon: {
-    fontSize: 24,
   },
   coopDetailName: {
     fontSize: 18,
@@ -616,4 +705,4 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "#f0f0f0",
   },
-})
+});

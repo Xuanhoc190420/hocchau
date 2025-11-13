@@ -1,5 +1,18 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native"
-import { COLORS } from "../../styles/theme"
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  NaturalBadgeIcon,
+  WheatIcon,
+  CheckIcon,
+  DeliveryIcon,
+  ChickenIcon,
+  DrumstickIcon,
+  EggIcon,
+  BowlIcon,
+  PhoneIcon,
+  EmailIcon,
+  LocationIcon,
+} from "../common/icons/home-icons";
+import COLORS from "../../styles/theme";
 
 export default function HomeScreen() {
   return (
@@ -11,7 +24,9 @@ export default function HomeScreen() {
           <View style={styles.heroOverlay} />
           <View style={styles.heroContent}>
             <Text style={styles.heroTitle}>Gà Đồi Hoàng Long</Text>
-            <Text style={styles.heroSubtitle}>Chất lượng Premium Từ Thiên Nhiên</Text>
+            <Text style={styles.heroSubtitle}>
+              Chất lượng Premium Từ Thiên Nhiên
+            </Text>
           </View>
         </View>
       </View>
@@ -21,8 +36,9 @@ export default function HomeScreen() {
         <Text style={styles.sectionTitle}>Về Chúng Tôi</Text>
         <View style={styles.aboutCard}>
           <Text style={styles.aboutText}>
-            Gà Đồi Hoàng Long được nuôi dưỡng trên những đồi núi tự nhiên, với điều kiện sống tối ưu và chế độ ăn uống
-            chuẩn dinh dưỡng. Mỗi con gà đều được chăm sóc tỉ mỉ để mang lại sản phẩm chất lượng cao nhất.
+            Gà Đồi Hoàng Long được nuôi dưỡng trên những đồi núi tự nhiên, với
+            điều kiện sống tối ưu và chế độ ăn uống chuẩn dinh dưỡng. Mỗi con gà
+            đều được chăm sóc tỉ mỉ để mang lại sản phẩm chất lượng cao nhất.
           </Text>
         </View>
       </View>
@@ -32,27 +48,35 @@ export default function HomeScreen() {
         <Text style={styles.sectionTitle}>Tại Sao Chọn Chúng Tôi</Text>
         <View style={styles.featureGrid}>
           <View style={styles.featureCard}>
-            <Text style={styles.featureIcon}>🏔️</Text>
+            <NaturalBadgeIcon size={40} color="#4caf50" />
             <Text style={styles.featureTitle}>Nuôi Tự Nhiên</Text>
-            <Text style={styles.featureDesc}>Gà nuôi trên đồi với điều kiện sống tự nhiên</Text>
+            <Text style={styles.featureDesc}>
+              Gà nuôi trên đồi với điều kiện sống tự nhiên
+            </Text>
           </View>
 
           <View style={styles.featureCard}>
-            <Text style={styles.featureIcon}>🌾</Text>
+            <WheatIcon size={40} color="#f57c00" />
             <Text style={styles.featureTitle}>Chế Độ Ăn Uống</Text>
-            <Text style={styles.featureDesc}>Thức ăn tự nhiên, không chất bảo quản</Text>
+            <Text style={styles.featureDesc}>
+              Thức ăn tự nhiên, không chất bảo quản
+            </Text>
           </View>
 
           <View style={styles.featureCard}>
-            <Text style={styles.featureIcon}>✅</Text>
+            <CheckIcon size={40} color={COLORS.primary} />
             <Text style={styles.featureTitle}>Chất Lượng</Text>
-            <Text style={styles.featureDesc}>Đảm bảo an toàn vệ sinh thực phẩm</Text>
+            <Text style={styles.featureDesc}>
+              Đảm bảo an toàn vệ sinh thực phẩm
+            </Text>
           </View>
 
           <View style={styles.featureCard}>
-            <Text style={styles.featureIcon}>📦</Text>
+            <DeliveryIcon size={40} color="#1976d2" />
             <Text style={styles.featureTitle}>Giao Hàng Nhanh</Text>
-            <Text style={styles.featureDesc}>Vận chuyển tươi mới đến tận nhà</Text>
+            <Text style={styles.featureDesc}>
+              Vận chuyển tươi mới đến tận nhà
+            </Text>
           </View>
         </View>
       </View>
@@ -64,7 +88,8 @@ export default function HomeScreen() {
         <View style={styles.chickenContent}>
           <Text style={styles.chickenTitle}>Gà Đồi Hoàng Long</Text>
           <Text style={styles.chickenDesc}>
-            Được chọn lọc kỹ lưỡng, nuôi dưỡng tỉ mỉ trên những đồi cao, với khí hậu mát mẻ và thiên nhiên tươi tốt.
+            Được chọn lọc kỹ lưỡng, nuôi dưỡng tỉ mỉ trên những đồi cao, với khí
+            hậu mát mẻ và thiên nhiên tươi tốt.
           </Text>
         </View>
       </View>
@@ -74,19 +99,19 @@ export default function HomeScreen() {
         <Text style={styles.sectionTitle}>Sản Phẩm Nổi Bật</Text>
         <View style={styles.productPreviewGrid}>
           <View style={styles.productPreviewCard}>
-            <Text style={styles.productPreviewIcon}>🐔</Text>
+            <ChickenIcon size={48} color="#f57c00" />
             <Text style={styles.productPreviewName}>Gà Tươi</Text>
           </View>
           <View style={styles.productPreviewCard}>
-            <Text style={styles.productPreviewIcon}>🍗</Text>
+            <DrumstickIcon size={48} color="#d84315" />
             <Text style={styles.productPreviewName}>Gà Khô</Text>
           </View>
           <View style={styles.productPreviewCard}>
-            <Text style={styles.productPreviewIcon}>🥚</Text>
+            <EggIcon size={48} color="#fdd835" />
             <Text style={styles.productPreviewName}>Trứng Gà</Text>
           </View>
           <View style={styles.productPreviewCard}>
-            <Text style={styles.productPreviewIcon}>🍜</Text>
+            <BowlIcon size={48} color="#e64a19" />
             <Text style={styles.productPreviewName}>Phở Gà</Text>
           </View>
         </View>
@@ -96,18 +121,31 @@ export default function HomeScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Liên Hệ Với Chúng Tôi</Text>
         <View style={styles.contactInfo}>
-          <Text style={styles.contactItem}>📞 +84 1234 567 890</Text>
-          <Text style={styles.contactItem}>📧 support@gadoihoanglong.com</Text>
-          <Text style={styles.contactItem}>📍 Đồi Hùng Sơn, Tây Sơn, Yên Bái</Text>
+          <View style={styles.contactRow}>
+            <PhoneIcon size={20} color={COLORS.primary} />
+            <Text style={styles.contactItem}>+84 1234 567 890</Text>
+          </View>
+          <View style={styles.contactRow}>
+            <EmailIcon size={20} color="#1976d2" />
+            <Text style={styles.contactItem}>support@gadoihoanglong.com</Text>
+          </View>
+          <View style={styles.contactRow}>
+            <LocationIcon size={20} color="#d32f2f" />
+            <Text style={styles.contactItem}>
+              Đồi Hùng Sơn, Tây Sơn, Yên Bái
+            </Text>
+          </View>
         </View>
       </View>
 
       {/* Footer */}
       <View style={styles.footer}>
-        <Text style={styles.footerText}>© 2025 Gà Đồi Hoàng Long - Chất Lượng Là Ưu Tiên</Text>
+        <Text style={styles.footerText}>
+          © 2025 Gà Đồi Hoàng Long - Chất Lượng Là Ưu Tiên
+        </Text>
       </View>
     </ScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -116,7 +154,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fafbfc",
   },
 
-  // Hero Section - IMPROVED
   heroSection: {
     height: 320,
     position: "relative",
@@ -129,7 +166,8 @@ const styles = StyleSheet.create({
   heroImagePlaceholder: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: "#4a90e2",
-    backgroundImage: "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
+    backgroundImage:
+      "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
   },
   heroOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -154,7 +192,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // Sections
   section: {
     paddingHorizontal: 16,
     paddingVertical: 24,
@@ -168,7 +205,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
-  // About Section
   aboutCard: {
     backgroundColor: "#f5f5f5",
     borderRadius: 12,
@@ -182,7 +218,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
 
-  // Features Grid
   featureGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -196,6 +231,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#e0e0e0",
+    gap: 8,
   },
   featureIcon: {
     fontSize: 32,
@@ -215,7 +251,6 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
 
-  // Chicken Section
   chickenSection: {
     backgroundColor: "#fff",
     marginBottom: 16,
@@ -241,7 +276,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 
-  // Products Preview
   productPreviewGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -255,6 +289,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#e0e0e0",
+    gap: 12,
   },
   productPreviewIcon: {
     fontSize: 36,
@@ -267,20 +302,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  // Contact Info
   contactInfo: {
     backgroundColor: "#f5f5f5",
     borderRadius: 12,
     padding: 16,
     gap: 12,
   },
+  contactRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
   contactItem: {
     fontSize: 14,
     color: "#333",
     fontWeight: "500",
+    flex: 1,
   },
 
-  // Footer
   footer: {
     backgroundColor: COLORS.primary,
     paddingHorizontal: 16,
@@ -292,4 +331,4 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
-})
+});
