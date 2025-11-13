@@ -11,6 +11,8 @@ import userRoutes from "./routes/userRoutes.js"
 import contactRoutes from "./routes/contactRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
 import orderRoutes from "./routes/orderRoutes.js"
+import homeContentRoutes from "./routes/homeContentRoutes.js" // Import home content routes
+import storeRoutes from "./routes/storeRoutes.js" // Import store routes
 import SensorLog from "./models/SensorLog.js"
 
 dotenv.config()
@@ -53,6 +55,8 @@ app.use("/api/feed", feedRoutes)
 app.use("/api/sensors", sensorRoutes)
 app.use("/api/products", productRoutes)
 app.use("/api/orders", orderRoutes)
+app.use("/api/home-content", homeContentRoutes) // Add home content routes
+app.use("/api/stores", storeRoutes) // Add store routes
 
 // Proxy to fetch all Blynk pins (and optionally save snapshot)
 app.get("/api/blynk/getAll", requireApiKey, async (req, res) => {

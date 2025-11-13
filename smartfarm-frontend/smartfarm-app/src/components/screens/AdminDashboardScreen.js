@@ -6,7 +6,7 @@ import { COLORS } from "../../styles/theme"
 import axios from "axios"
 import { API_BASE } from "../../api/api"
 
-export default function AdminDashboardScreen({ user, onLogout }) {
+export default function AdminDashboardScreen({ user, onLogout, onNavigateToStoreManager, onNavigateToHomeContent }) {
   const [activeTab, setActiveTab] = useState("overview")
   const [users, setUsers] = useState([])
   const [coops, setCoops] = useState([])
@@ -81,6 +81,21 @@ export default function AdminDashboardScreen({ user, onLogout }) {
         <Text style={styles.infoText}>Email: {user?.email}</Text>
         <Text style={styles.infoText}>Vai trò: Admin</Text>
       </View>
+
+      <TouchableOpacity style={styles.quickActionButton} onPress={onNavigateToStoreManager}>
+        <Text style={styles.quickActionIcon}>🏪</Text>
+        <Text style={styles.quickActionText}>Quản Lý Cửa Hàng Phở Gà</Text>
+        <Text style={styles.quickActionArrow}>→</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.quickActionButton, { backgroundColor: "#52b788" }]}
+        onPress={onNavigateToHomeContent}
+      >
+        <Text style={styles.quickActionIcon}>🏠</Text>
+        <Text style={styles.quickActionText}>Quản Lý Nội Dung Trang Chủ</Text>
+        <Text style={styles.quickActionArrow}>→</Text>
+      </TouchableOpacity>
     </View>
   )
 
@@ -360,5 +375,28 @@ const styles = StyleSheet.create({
     color: "#999",
     marginTop: 40,
     fontSize: 14,
+  },
+  quickActionButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLORS.primaryLight,
+    borderRadius: 12,
+    padding: 16,
+    marginTop: 8,
+  },
+  quickActionIcon: {
+    fontSize: 24,
+    marginRight: 12,
+  },
+  quickActionText: {
+    flex: 1,
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#fff",
+  },
+  quickActionArrow: {
+    fontSize: 20,
+    color: "#fff",
+    fontWeight: "700",
   },
 })

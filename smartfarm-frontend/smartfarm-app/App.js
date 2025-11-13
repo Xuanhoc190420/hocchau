@@ -5,7 +5,6 @@ import { View, StyleSheet, SafeAreaView, Alert, TouchableOpacity } from "react-n
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Header from "./src/components/Header"
 import HomeScreen from "./src/components/screens/HomeScreen"
-import IoTDashboard from "./src/components/IoTDashboard"
 import FarmManagementHub from "./src/components/FarmManagementHub"
 import CoopsScreen from "./src/components/screens/CoopsScreen"
 import ProductsScreen from "./src/components/screens/ProductsScreen"
@@ -17,6 +16,8 @@ import ExportChickenScreen from "./src/components/screens/ExportChickenScreen"
 import OrderManagementScreen from "./src/components/screens/OrderManagementScreen"
 import LoginScreen from "./src/components/screens/LoginScreen"
 import RegisterScreen from "./src/components/screens/RegisterScreen"
+import StoreManagerScreen from "./src/components/screens/StoreManagerScreen"
+import StoreChainScreen from "./src/components/screens/StoreChainScreen"
 
 import { COLORS } from "./src/styles/theme"
 
@@ -137,11 +138,11 @@ export default function App() {
     if (currentTab === "Products") {
       return <ProductsScreen />
     }
+    if (currentTab === "StoreChain") {
+      return <StoreChainScreen />
+    }
     if (currentTab === "Coops") {
       return <CoopsScreen />
-    }
-    if (currentTab === "IoT") {
-      return <IoTDashboard />
     }
     if (currentTab === "Farm") {
       if (farmScreen === "hub") {
@@ -164,6 +165,9 @@ export default function App() {
       }
       if (farmScreen === "manageOrders") {
         return <OrderManagementScreen onBack={handleBackToHub} />
+      }
+      if (farmScreen === "manageStores") {
+        return <StoreManagerScreen onBack={handleBackToHub} />
       }
     }
     if (currentTab === "Contact") {

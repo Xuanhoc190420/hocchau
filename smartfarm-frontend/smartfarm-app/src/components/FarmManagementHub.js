@@ -137,6 +137,18 @@ export default function FarmManagementHub({ onSelectFeature }) {
         onSelectFeature("manageOrders")
       },
     },
+    {
+      id: 7,
+      title: "Quản Lý Cửa Hàng",
+      icon: "🏪",
+      description: "Quản lý cửa hàng phở gà",
+      color: "#fff9c4",
+      borderColor: "#f57f17",
+      onPress: () => {
+        console.log("[v0] Selected: manageStores")
+        onSelectFeature("manageStores")
+      },
+    },
   ]
 
   return (

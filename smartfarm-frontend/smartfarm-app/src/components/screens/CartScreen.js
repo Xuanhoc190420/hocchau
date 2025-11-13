@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Modal } from "react-native"
+import SelectStoreScreen from "./SelectStoreScreen"
 
 export default function CartScreen({ onBack, cartItems, onUpdateCart, onClearCart, onCheckout }) {
   const [deliveryMethod, setDeliveryMethod] = useState("grab")
@@ -13,6 +14,8 @@ export default function CartScreen({ onBack, cartItems, onUpdateCart, onClearCar
   const [otpCode, setOtpCode] = useState("")
   const [countdown, setCountdown] = useState(119)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [selectedStore, setSelectedStore] = useState(null)
+  const [showStoreSelection, setShowStoreSelection] = useState(false)
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
     address: "",
@@ -84,6 +87,11 @@ export default function CartScreen({ onBack, cartItems, onUpdateCart, onClearCar
   }
 
   const handlePlaceOrder = () => {
+    if (!selectedStore) {
+      window.alert("Vui lòng chọn cửa hàng để đặt hàng")
+      setShowStoreSelection(true)
+      return
+    }
     if (!customerInfo.name || !customerInfo.address) {
       window.alert("Vui lòng nhập đầy đủ thông tin người nhận")
       return
@@ -98,6 +106,8 @@ export default function CartScreen({ onBack, cartItems, onUpdateCart, onClearCar
       deliveryMethod,
       discountCode,
       total: calculateTotal(),
+      storeId: selectedStore._id,
+      storeName: selectedStore.name,
     })
   }
 
@@ -131,6 +141,30 @@ export default function CartScreen({ onBack, cartItems, onUpdateCart, onClearCar
       </View>
 
       <ScrollView style={styles.content}>
+        {/* Store Selection */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>🏪 Cửa hàng</Text>
+          {selectedStore ? (
+            <View style={styles.selectedStoreBox}>
+              <View style={styles.selectedStoreInfo}>
+                <Text style={styles.selectedStoreName}>{selectedStore.name}</Text>
+                <Text style={styles.selectedStoreAddress}>{selectedStore.address}</Text>
+                <Text style={styles.selectedStorePhone}>📱 {selectedStore.phone}</Text>
+                {selectedStore.distance && (
+                  <Text style={styles.selectedStoreDistance}>📏 Cách bạn {selectedStore.distance} km</Text>
+                )}
+              </View>
+              <TouchableOpacity style={styles.changeStoreBtn} onPress={() => setShowStoreSelection(true)}>
+                <Text style={styles.changeStoreBtnText}>Đổi cửa hàng</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity style={styles.selectStoreBtn} onPress={() => setShowStoreSelection(true)}>
+              <Text style={styles.selectStoreBtnText}>Chọn cửa hàng gần bạn</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
         {/* Delivery Method */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>🚗 Giao hàng</Text>
@@ -371,6 +405,19 @@ export default function CartScreen({ onBack, cartItems, onUpdateCart, onClearCar
               <Text style={styles.modalConfirmText}>Xác nhận</Text>
             </TouchableOpacity>
           </View>
+        </View>
+      </Modal>
+
+      <Modal visible={showStoreSelection} transparent animationType="slide">
+        <View style={styles.fullScreenModal}>
+          <SelectStoreScreen
+            onBack={() => setShowStoreSelection(false)}
+            onSelectStore={(store) => {
+              setSelectedStore(store)
+              setShowStoreSelection(false)
+            }}
+            customerLocation={null} // Can be updated to use actual customer location
+          />
         </View>
       </Modal>
     </View>
@@ -823,5 +870,65 @@ const styles = StyleSheet.create({
   },
   resendTextDisabled: {
     color: "#999",
+  },
+  selectedStoreBox: {
+    backgroundColor: "#d8f3dc",
+    padding: 16,
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: "#52b788",
+  },
+  selectedStoreInfo: {
+    marginBottom: 12,
+  },
+  selectedStoreName: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#1b4332",
+    marginBottom: 4,
+  },
+  selectedStoreAddress: {
+    fontSize: 13,
+    color: "#2d6a4f",
+    marginBottom: 4,
+  },
+  selectedStorePhone: {
+    fontSize: 13,
+    color: "#2d6a4f",
+    marginBottom: 4,
+  },
+  selectedStoreDistance: {
+    fontSize: 13,
+    color: "#52b788",
+    fontWeight: "600",
+  },
+  changeStoreBtn: {
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    borderWidth: 1.5,
+    borderColor: "#52b788",
+  },
+  changeStoreBtnText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#2d6a4f",
+  },
+  selectStoreBtn: {
+    backgroundColor: "#52b788",
+    paddingVertical: 14,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  selectStoreBtnText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#fff",
+  },
+  fullScreenModal: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
 })

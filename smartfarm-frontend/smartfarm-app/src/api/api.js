@@ -275,3 +275,104 @@ export async function submitContact(name, email, phone, subject, message) {
     handleApiError(e)
   }
 }
+
+// Home Content API functions
+export async function getHomeContent() {
+  try {
+    const r = await axios.get(`${API_BASE}/api/home-content`)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function createHomeContent(payload) {
+  try {
+    const r = await axios.post(`${API_BASE}/api/home-content`, payload)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function updateHomeContent(id, payload) {
+  try {
+    const r = await axios.put(`${API_BASE}/api/home-content/${id}`, payload)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function deleteHomeContent(id) {
+  try {
+    const r = await axios.delete(`${API_BASE}/api/home-content/${id}`)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function reorderHomeContent(id, newOrder) {
+  try {
+    const r = await axios.put(`${API_BASE}/api/home-content/reorder/${id}`, { newOrder })
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+// Stores API functions
+export async function getStores() {
+  try {
+    const r = await axios.get(`${API_BASE}/api/stores`)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function getNearestStores(lat, lng, limit = 5) {
+  try {
+    const r = await axios.get(`${API_BASE}/api/stores/nearest?lat=${lat}&lng=${lng}&limit=${limit}`)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function getStore(id) {
+  try {
+    const r = await axios.get(`${API_BASE}/api/stores/${id}`)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function createStore(payload) {
+  try {
+    const r = await axios.post(`${API_BASE}/api/stores`, payload)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function updateStore(id, payload) {
+  try {
+    const r = await axios.put(`${API_BASE}/api/stores/${id}`, payload)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}
+
+export async function deleteStore(id) {
+  try {
+    const r = await axios.delete(`${API_BASE}/api/stores/${id}`)
+    return r.data
+  } catch (e) {
+    handleApiError(e)
+  }
+}

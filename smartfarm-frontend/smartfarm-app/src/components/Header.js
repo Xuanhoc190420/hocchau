@@ -11,8 +11,8 @@ export default function Header({ currentTab, onTabChange, currentUser, onLogout,
   const navItems = [
     { id: "Home", label: "Trang chủ" },
     { id: "Products", label: "Sản phẩm" },
+    { id: "StoreChain", label: "Chuỗi cửa hàng" },
     { id: "Coops", label: "Trang trại" },
-    { id: "IoT", label: "Hệ thống IoT" },
     { id: "Farm", label: "Quản lí trang trại" },
   ]
 
